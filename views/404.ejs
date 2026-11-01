@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found | Shortly</title>
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <style>
+      .error-container {
+        min-height: 75vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 30px 20px;
+      }
+
+      .error-code {
+        font-size: clamp(100px, 20vw, 190px);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -10px;
+        background: linear-gradient(135deg, #ffffff, #aaa99e);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .error-container h1 {
+        font-size: 32px;
+        margin: 20px 0 12px;
+        color: #ffffff;
+      }
+
+      .error-container p {
+        color: #a1a1aa;
+        font-size: 16px;
+        max-width: 400px;
+        line-height: 1.6;
+      }
+
+      .error-home-btn {
+        margin-top: 30px;
+        padding: 13px 25px;
+        background: linear-gradient(135deg, #aaa99e, #85857b);
+        color: #242421;
+        text-decoration: none;
+        border: 1px solid rgba(220, 220, 205, 0.18);
+        border-radius: 11px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+      }
+
+      .error-home-btn:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #b8b7aa, #969589);
+        box-shadow: 0 5px 15px rgba(170, 169, 158, 0.12);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="ambient-glow glow-one"></div>
+    <div class="ambient-glow glow-two"></div>
+
+    <nav class="navbar">
+      <div class="logo">Shortly</div>
+
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+
+    <main class="error-container">
+      <span class="error-code">404</span>
+
+      <h1>Oops! Lost your way?</h1>
+
+      <p>
+        The short link you're looking for doesn't exist or may have been
+        removed.
+      </p>
+
+      <a href="/" class="error-home-btn">Back to Home ↗</a>
+    </main>
+  </body>
+</html>
+

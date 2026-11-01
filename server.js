@@ -114,9 +114,7 @@ app.get("/:shortId", async (req, res) => {
   });
 
   if (!url) {
-    return res.status(404).json({
-      message: "Short URL not found",
-    });
+    return res.status(404).render("404.ejs");
   }
 
   return res.redirect(url.fullUrl);
