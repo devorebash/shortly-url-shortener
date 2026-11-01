@@ -2000,8 +2000,8 @@ html {
   overflow-y: scroll;
 }
 @media (max-width: 600px) {
-    .error-code {
+    .container h1 .error-code {
       display: inline-block;
-        transform: translateX(-10px);
+        transform: translateX(-10px) !important;
     }
 }
