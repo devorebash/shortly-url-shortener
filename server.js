@@ -5,7 +5,7 @@ import { randomBytes } from "crypto";
 import "dotenv/config";
 
 const app = express();
-
+app.set("trust proxy", 1);
 // Middleware
 app.use(express.json());
 app.use(express.static("public"));
