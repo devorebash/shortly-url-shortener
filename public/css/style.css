@@ -2001,6 +2001,7 @@ html {
 }
 @media (max-width: 600px) {
     .error-code {
+      display: inline-block;
         transform: translateX(-10px);
     }
 }
