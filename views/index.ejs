@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Shortly — Make Links Shorter</title>
+
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <!-- Background Effects -->
+    <div class="ambient-glow glow-one"></div>
+    <div class="ambient-glow glow-two"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">Shortly</div>
+
+      <div class="nav-links">
+        <a href="/" class="active">Home</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+
+    <!-- Main Hero Section -->
+    <main class="container">
+      <div class="hero-badge">
+        <span class="status-dot"></span>
+        SIMPLE. FAST. FREE.
+      </div>
+
+      <h1>
+        Less link.<br />
+        <span>More possibilities.</span>
+      </h1>
+
+      <p class="hero-description">
+        Transform long, messy URLs into clean, simple links that are ready to
+        share.
+      </p>
+
+      <!-- Accordion URL Card -->
+      <div class="url-card">
+        <!-- Input Section -->
+        <div class="input-box">
+          <input
+            type="url"
+            id="longUrl"
+            placeholder="Paste your long URL here..."
+          />
+
+          <button id="shortenBtn" disabled>Shorten URL</button>
+        </div>
+
+        <!-- Expandable Result Section -->
+        <div class="result-panel" id="resultPanel">
+          <div class="result-heading">
+            <span class="result-label">YOUR SHORT LINK</span>
+          </div>
+
+          <div class="result-link">
+            <span id="shortUrl"></span>
+
+            <button id="copyBtn">Copy</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>
