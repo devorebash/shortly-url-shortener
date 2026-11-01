@@ -1999,3 +1999,8 @@ body:has(main.container) main.container {
 html {
   overflow-y: scroll;
 }
+@media (max-width: 600px) {
+    .error-code {
+        transform: translateX(-10px);
+    }
+}
