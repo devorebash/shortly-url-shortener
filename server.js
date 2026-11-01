@@ -44,78 +44,100 @@ app.get("/about", (req, res) => {
 
 // Shorten URL
 app.post("/shorten", async (req, res) => {
-  const { fullUrl } = req.body;
-
-  if (!fullUrl) {
-    return res.status(400).json({
-      message: "URL is required",
-    });
-  }
-
-  let parsedUrl;
-
   try {
-    parsedUrl = new URL(fullUrl);
+    const { fullUrl } = req.body;
 
-    if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+    if (!fullUrl) {
       return res.status(400).json({
-        message: "Only HTTP and HTTPS URLs are allowed!",
+        message: "URL is required",
       });
     }
-  } catch (err) {
-    return res.status(400).json({
-      message: "Invalid URL!",
+
+    let parsedUrl;
+
+    try {
+      parsedUrl = new URL(fullUrl);
+
+      if (
+        parsedUrl.protocol !== "http:" &&
+        parsedUrl.protocol !== "https:"
+      ) {
+        return res.status(400).json({
+          message: "Only HTTP and HTTPS URLs are allowed!",
+        });
+      }
+    } catch (err) {
+      return res.status(400).json({
+        message: "Invalid URL!",
+      });
+    }
+
+    if (parsedUrl.host === req.get("host")) {
+      return res.status(400).json({
+        message: "You cannot shorten your own shortened URL!",
+      });
+    }
+
+    // Check whether URL already exists
+    const existingUrl = await Url.findOne({
+      fullUrl: fullUrl,
     });
-  }
 
-  if (parsedUrl.host === req.get("host")) {
-    return res.status(400).json({
-      message: "You cannot shorten your own shortened URL!",
+    if (existingUrl) {
+      return res.status(200).json({
+        success: true,
+        message: "URL already exists",
+        shortUrl: `${req.protocol}://${req.get("host")}/${existingUrl.shortUrl}`,
+      });
+    }
+
+    // Generate a random short ID
+    const shortId = randomBytes(4).toString("hex");
+
+    // Save URL in MongoDB
+    const newUrl = new Url({
+      fullUrl: fullUrl,
+      shortUrl: shortId,
     });
-  }
 
-  // Check whether the URL already exists
-  const existingUrl = await Url.findOne({
-    fullUrl: fullUrl,
-  });
+    await newUrl.save();
 
-  if (existingUrl) {
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      message: "URL already exists",
-      shortUrl: `${req.protocol}://${req.get("host")}/${existingUrl.shortUrl}`,
+      message: "URL shortened successfully",
+      shortUrl: `${req.protocol}://${req.get("host")}/${shortId}`,
+    });
+
+  } catch (err) {
+    console.error("URL shortening error:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again later.",
     });
   }
-
-  // Generate a random short ID
-  const shortId = randomBytes(4).toString("hex");
-
-  // Save URL in MongoDB
-  const newUrl = new Url({
-    fullUrl: fullUrl,
-    shortUrl: shortId,
-  });
-
-  await newUrl.save();
-
-  res.status(201).json({
-    success: true,
-    message: "URL shortened successfully",
-    shortUrl: `${req.protocol}://${req.get("host")}/${shortId}`,
-  });
 });
 
 // Redirect to original URL
 app.get("/:shortId", async (req, res) => {
-  const { shortId } = req.params;
+  try {
+    const { shortId } = req.params;
 
-  const url = await Url.findOne({
-    shortUrl: shortId,
-  });
+    const url = await Url.findOne({
+      shortUrl: shortId,
+    });
 
-  if (!url) {
-    return res.status(404).render("404.ejs");
+    if (!url) {
+      return res.status(404).render("404.ejs");
+    }
+
+    return res.redirect(url.fullUrl);
+
+  } catch (err) {
+    console.error("Redirect error:", err);
+
+    return res.status(500).send(
+      "Something went wrong. Please try again later."
+    );
   }
-
-  return res.redirect(url.fullUrl);
 });
