@@ -3,6 +3,7 @@ const urlSchema = new mongoose.Schema({
   fullUrl: {
     type: String,
     required: true,
+    trim: true,
   },
   shortUrl: {
     type: String,

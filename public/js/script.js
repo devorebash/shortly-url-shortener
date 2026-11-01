@@ -60,7 +60,7 @@ shortenBtn.addEventListener("click", async () => {
       }),
     });
 
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
 
     console.log("Server response:", data);
 
