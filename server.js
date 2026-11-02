@@ -73,10 +73,19 @@ app.post("/shorten", async (req, res) => {
     }
 
     if (parsedUrl.host === req.get("host")) {
-      return res.status(400).json({
-        message: "You cannot shorten your own shortened URL!",
-      });
+
+    // If someone enters Shortly's homepage
+    if (parsedUrl.pathname === "/") {
+        return res.status(400).json({
+            message: "This URL belongs to Shortly. Please enter a different URL to shorten."
+        });
     }
+
+    // If someone enters an already shortened Shortly URL
+    return res.status(400).json({
+        message: "You cannot shorten your own shortened URL!"
+    });
+}
 
     // Check whether URL already exists
     const existingUrl = await Url.findOne({
